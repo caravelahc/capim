@@ -416,7 +416,6 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
                 overlay[dia][hora] = true;
             onover(dia, hora);
         };
-        ui_grayout.show();
         ui_horario.set_toggle(toggle, onover, onout);
         ui_turmas.edit_start(turma);
         self.editando = turma;
@@ -447,11 +446,9 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
     };
 
     ui_turmas.cb_ok = function() {
-        ui_grayout.hide();
         update_all();
     };
     ui_turmas.cb_cancel = function() {
-        ui_grayout.hide();
         clear_overlay();
         ui_horario.set_toggle(null);
         ui_turmas.edit_end();
@@ -914,31 +911,6 @@ window.onload = function() {
     var ui_saver       = new UI_saver("saver");
     var ui_updates     = new UI_updates("updates_list");
     var ui_avisos      = new UI_avisos("avisos");
-
-    var ui_grayout     = new UI_grayout("grayout");
-    ui_grayout.cb_onclick = function() {
-        if (sobre_shown) {
-            ui_sobre_popup.cb_fechar();
-        } else if (main.editando) {
-            ui_turmas.cb_cancel();
-        }
-    };
-    var ui_sobre_popup = new UI_sobre_popup("sobre_popup");
-    ui_sobre_popup.link = document.getElementById("sobre");
-    var a = document.createElement("a");
-    a.href = "#";
-    a.innerHTML = "Sobre";
-    a.onclick = function() {
-        ui_sobre_popup.show();
-        ui_grayout.show();
-        sobre_shown = true;
-    };
-    ui_sobre_popup.link.appendChild(a);
-    ui_sobre_popup.cb_fechar = function() {
-        ui_grayout.hide();
-        ui_sobre_popup.hide();
-        sobre_shown = false;
-    }
 
     var state = new State();
     var display = new Display(ui_logger, ui_horario);
