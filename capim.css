@@ -9,6 +9,7 @@ th {
 .ui_campus, .ui_saver, .ui_logger, .ui_planos {
     font-size: 13px;
 }
+
 .ui_campus select {
     font-size: 11px;
 }
@@ -24,6 +25,7 @@ th {
     font-size: 11px;
     width: 90px;
 }
+
 .ui_saver span {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -35,10 +37,12 @@ th {
     font-size: 11px;
     text-align: center;
 }
+
 .ui_combinacoes input {
     width: 30px;
     height: 13px;
 }
+
 .ui_combinacoes span {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -60,17 +64,20 @@ th {
     font-size: 11px;
     z-index: 3000;
 }
+
 .combobox_suggestions div {
     background-color: white;
     padding: 0;
     z-index: 1;
 }
+
 .combobox_suggestions div div {
     white-space: nowrap;
     background-color: white;
     display: block;
     width: 110%;
 }
+
 .combobox_input {
     font-size: 11px;
 }
@@ -78,6 +85,7 @@ th {
 .ui_turmas {
     border: 1px solid black;
 }
+
 .ui_turmas_big_button {
     position: absolute;
     z-index: 2000;
@@ -91,20 +99,24 @@ th {
     width: 100px;
     cursor: pointer;
 }
+
 .ui_turmas table {
     background-color: black;
     table-layout: fixed;
     font-size: 11px;
 }
+
 .ui_turmas table tr {
     cursor: pointer;
 }
+
 .ui_turmas_menu {
     position: absolute;
     top: 0;
     right: 0;
     display: none;
 }
+
 .ui_turmas_menu_v {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -115,12 +127,14 @@ th {
     border: 1px solid black;
     padding: 3px 5px 4px 5px;
 }
+
 .ui_turmas_menu_div {
     padding: 1px;
     border: 1px solid black;
     clear: both;
     display: none;
 }
+
 .ui_turmas_menu_div div {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -131,12 +145,14 @@ th {
     border: 1px solid black;
     overflow: auto;
 }
+
 .ui_materias table {
     background-color: black;
     table-layout: fixed;
     font-size: 11px;
     width: 882px;
 }
+
 .ui_materias_edit_input {
     font-size: 11px;
     width: 100%;
@@ -165,24 +181,13 @@ th {
     position: relative;
     font-size: 11px;
 }
+
 .ui_horario_celula {
     background-color: white;
     border: 1px solid black;
     height: 18px;
     width: 60px;
     text-align: center;
-}
-
-.ui_grayout {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: #666666;
-    opacity: .7;
-    filter: alpha(opacity=70);
-    z-index: 1000;
 }
 
 .simple_button {
@@ -195,6 +200,7 @@ th {
 }
 
 /* widgets */
+
 .widget_dropdown_menu_button {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -206,15 +212,18 @@ th {
     text-align: left;
     font-size: 13px;
 }
+
 .widget_dropdown_menu_button:hover {
     background-color: black;
     color: #eeeeee;
     z-index: 3001;
 }
+
 .widget_dropdown_menu_button:hover .widget_dropdown_menu {
     display: block;
     color: black;
 }
+
 .widget_dropdown_menu {
     left: -1px;
     display: none;
@@ -222,6 +231,7 @@ th {
     position: absolute;
     border: 1px solid black;
 }
+
 .widget_dropdown_menu_op:hover {
     background-color: black;
     color: #eeeeee;

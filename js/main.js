@@ -3,7 +3,7 @@ const default_db = current_display_semester();
  * @constructor
  */
 function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
-              ui_saver, ui_campus, ui_planos, ui_grayout, ui_updates, ui_avisos,
+              ui_saver, ui_campus, ui_planos, ui_updates, ui_avisos,
               combo, state, display, persistence, database)
 {
     var self = this;
@@ -918,7 +918,7 @@ window.onload = function() {
     dconsole2 = new Dconsole("dconsole");
     var combo   = new Combobox("materias_input", "materias_suggestions", ui_logger, database);
     var main   = new Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes,
-                          ui_horario, ui_saver, ui_campus, ui_planos, ui_grayout,
+                          ui_horario, ui_saver, ui_campus, ui_planos,
                           ui_updates, ui_avisos, combo,
                           state, display, persistence, database);
 
