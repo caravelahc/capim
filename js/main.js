@@ -849,10 +849,8 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
         if (semestre == current) {
             ui_avisos.reset();
         } else {
-            let str = semestre.substr(0,4) + "-" + semestre.substr(4,1);
             ui_avisos.set_text(
-                "Você escolheu os horários de " + str + "! " +
-                "Nós já estamos em " + year + '-' + semester + "!"
+                "Há semestres novos disponíveis"
             );
         }
         semestre = DB_BASE_PATH + '/' + semestre;
