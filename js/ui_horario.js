@@ -176,7 +176,7 @@ var Cell = {
     normal: function(d) {
         return {
             fixed: d.fixed,
-            text: d.horario.materia.codigo + '\n' + d.horario.materia.chosen_class.nome,
+            text: d.horario.materia.codigo,
             sala: d.sala,
             bgcolor: d.horario.materia.cor,
             color: "black",
@@ -185,7 +185,7 @@ var Cell = {
     red: function(materia) {
         return {
             fixed: true,
-            text: materia.codigo,
+            text: materia,
             bgcolor: "red",
             color: "black",
         };
@@ -193,7 +193,7 @@ var Cell = {
     grey: function(materia) {
         return {
             fixed: false,
-            text: materia.codigo,
+            text: materia,
             bgcolor: "grey",
             color: "white",
         };
