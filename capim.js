@@ -1165,7 +1165,7 @@ function Display(ui_logger, ui_horario)
                 ui_logger.set_quick_text("choque de horario", "lightcoral");
                 ui_horario.display_cell(dia, hora, Cell.red(materia.codigo));
             } else {
-                ui_horario.display_cell(dia, hora, Cell.black(materia.codigo));
+                ui_horario.display_cell(dia, hora, Cell.grey(materia.codigo));
             }
         });
 
@@ -2312,7 +2312,7 @@ var Cell = {
     normal: function(d) {
         return {
             fixed: d.fixed,
-            text: d.horario.materia.codigo + '\n' + d.horario.materia.chosen_class.nome,
+            text: d.horario.materia.codigo,
             sala: d.sala,
             bgcolor: d.horario.materia.cor,
             color: "black",
@@ -2321,7 +2321,7 @@ var Cell = {
     red: function(materia) {
         return {
             fixed: true,
-            text: materia.codigo,
+            text: materia,
             bgcolor: "red",
             color: "black",
         };
@@ -2329,7 +2329,7 @@ var Cell = {
     grey: function(materia) {
         return {
             fixed: false,
-            text: materia.codigo,
+            text: materia,
             bgcolor: "grey",
             color: "white",
         };
@@ -3832,7 +3832,7 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             switch (tipo) {
                 case 0: ui_horario.clear_cell(dia, hora); break;
                 case 1: ui_horario.display_cell(dia, hora, {fixed:false,text:turma.materia.codigo,bgcolor:turma.materia.cor,color:"black"}); break;
-                case 2: ui_horario.display_cell(dia, hora, Cell.black (turma.materia.codigo)); break;
+                case 2: ui_horario.display_cell(dia, hora, Cell.grey (turma.materia.codigo)); break;
                 case 3: ui_horario.display_cell(dia, hora, Cell.normal(fake[dia][hora])); break;
                 case 4: ui_horario.display_cell(dia, hora, {fixed:false,text:turma.materia.codigo,bgcolor:"black",color:"red"}); break;
                 case 5: ui_horario.display_cell(dia, hora, Cell.red   (turma.materia.codigo)); break;
