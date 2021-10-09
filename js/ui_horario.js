@@ -173,7 +173,29 @@ function UI_horario(id)
     self.cb_select    = null;
 }
 var Cell = {
-    normal: function(  d) { return {fixed:d.fixed,text:d.horario.materia.codigo,sala:d.sala,bgcolor:d.horario.materia.cor,color:"black"}; },
-    red   : function(str) { return {fixed:true,text:str,bgcolor:"red",color:"black"}; },
-    black : function(str) { return {fixed:false,text:str,bgcolor:"black",color:"white"}; }
+    normal: function(d) {
+        return {
+            fixed: d.fixed,
+            text: d.horario.materia.codigo,
+            sala: d.sala,
+            bgcolor: d.horario.materia.cor,
+            color: "black",
+        };
+    },
+    red: function(materia) {
+        return {
+            fixed: true,
+            text: materia,
+            bgcolor: "red",
+            color: "black",
+        };
+    },
+    grey: function(materia) {
+        return {
+            fixed: false,
+            text: materia,
+            bgcolor: "grey",
+            color: "white",
+        };
+    }
 };

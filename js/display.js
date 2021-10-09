@@ -36,7 +36,7 @@ function Display(ui_logger, ui_horario)
                 ui_logger.set_quick_text("choque de horario", "lightcoral");
                 ui_horario.display_cell(dia, hora, Cell.red(materia.codigo));
             } else {
-                ui_horario.display_cell(dia, hora, Cell.black(materia.codigo));
+                ui_horario.display_cell(dia, hora, Cell.grey(materia.codigo));
             }
         });
 

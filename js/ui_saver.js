@@ -54,32 +54,16 @@ function UI_saver(id)
         var really = confirm("Você quer mesmo limpar tudo?");
         if (really) {
             self.cb_cleanup();
-            _gaq.push(['_trackEvent', 'state', 'reset', self.input.value]);
         }
     });
-    dropdown_menu.add("exportar arquivo ODS (Excel)", function(e) { self.cb_ods(); _gaq.push(['_trackEvent', 'state', 'ods', self.input.value]); });
-    dropdown_menu.add("exportar arquivo iCalendar", function(e) { self.cb_download(".ics"); _gaq.push(['_trackEvent', 'state', 'icalendar', self.input.value]); });
-    dropdown_menu.add("exportar arquivo JSON", function(e) { self.cb_download(".json"); _gaq.push(['_trackEvent', 'state', 'download', self.input.value]); });
-    dropdown_menu.add("importar arquivo JSON", function(e) { self.cb_upload(); _gaq.push(['_trackEvent', 'state', 'upload', self.input.value]); });
+    dropdown_menu.add("exportar arquivo JSON", function(e) { self.cb_download(".json") });
+    dropdown_menu.add("importar arquivo JSON", function(e) { self.cb_upload() });
 
     self.enabled = true;
     self.disable = () => {
         if (!self.enabled) {
             return;
         }
-
-        const disable_button = (button) => {
-            button.style.backgroundColor = "lightgrey";
-            button.style.border = "solid 1px black";
-            button.disabled = true;
-
-            button.style.opacity = ".6";
-            button.style.filter = "alpha(opacity=60)";
-            button.title = "escolha um identificador primeiro";
-        }
-
-        disable_button(self.button_load);
-        disable_button(self.button_save);
 
         self.enabled = false;
     }

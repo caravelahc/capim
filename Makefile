@@ -2,7 +2,7 @@ include config.mak
 
 default: install
 
-all: ods.py capim.py dispatch.$(CGI) capim.js index.html
+all: capim.js
 
 SRC:=json2.js \
      utils.js \
@@ -17,7 +17,6 @@ SRC:=json2.js \
      state.js \
      versao.js \
      widgets.js \
-     ui_sobre_popup.js \
      ui_avisos.js \
      ui_campus.js \
      ui_combinacoes.js \
@@ -43,18 +42,6 @@ ifeq ($(RELEASE),1)
 	sed_RELEASE=-e "s/if(0)/if(1)/"
 endif
 
-ods.py: py/ods.py
-	sed "s|\$$BASE_PATH|${BASE_PATH}|" $^ | tee $@ > /dev/null
-
-capim.py: py/capim.py
-	sed "s|\$$BASE_PATH|${BASE_PATH}|" $^ | tee $@ > /dev/null
-
-dispatch.$(CGI): py/dispatch.fcgi
-	sed -e "s|\$$BASE_PATH|${BASE_PATH}|" -e "s|/usr/bin/python|${PYTHON_BIN}|" $^ | tee $@ > /dev/null
-
-index.html: html/capim.html html/sobre.html
-	sed -e "/include_sobre/r html/sobre.html" -e "/include_sobre/d" ${sed_RELEASE} html/capim.html | tee $@ > /dev/null
-
 capim.js: $(SRC)
 ifeq ($(RELEASE),1)
 	closure --compilation_level=SIMPLE_OPTIMIZATIONS $(addprefix --js=,$(SRC)) --js_output_file=$@
@@ -66,7 +53,6 @@ clean::
 	rm -rf capim.js index.html
 	rm -rf ${SITE_PATH}
 	rm -f $(addsuffix /*~,. c db html js py) .htaccess~ .gitignore~
-	rm -f capim.py ods.py dispatch.$(CGI)
 	rm -f capim.css.gz capim.js.gz index.html.gz
 
 distclean: clean
@@ -88,6 +74,6 @@ ifndef SITE_PATH
 endif
 	mkdir -p ${SITE_PATH}
 	cp favicon.ico capim.css ${SITE_PATH}/
-	mv capim.js dispatch.$(CGI) capim.py ods.py index.html ${SITE_PATH}/
-	chmod 755 ${SITE_PATH}/dispatch.$(CGI) ${SITE_PATH}/capim.py ${SITE_PATH}/ods.py
+	mv capim.js ${SITE_PATH}/
+	cp html/capim.html ${SITE_PATH}/index.html
 	cp .htaccess ${SITE_PATH}/

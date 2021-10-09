@@ -1,9 +1,12 @@
 const default_db = current_display_semester();
+const DEBUG = true;
+const DB_URL = DEBUG ? "http://localhost:8001" : "https://db.matrufsc.caravela.club";
+
 /**
  * @constructor
  */
 function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
-              ui_saver, ui_campus, ui_planos, ui_grayout, ui_updates, ui_avisos,
+              ui_saver, ui_campus, ui_planos, ui_updates, ui_avisos,
               combo, state, display, persistence, database)
 {
     var self = this;
@@ -387,7 +390,7 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             switch (tipo) {
                 case 0: ui_horario.clear_cell(dia, hora); break;
                 case 1: ui_horario.display_cell(dia, hora, {fixed:false,text:turma.materia.codigo,bgcolor:turma.materia.cor,color:"black"}); break;
-                case 2: ui_horario.display_cell(dia, hora, Cell.black (turma.materia.codigo)); break;
+                case 2: ui_horario.display_cell(dia, hora, Cell.grey (turma.materia.codigo)); break;
                 case 3: ui_horario.display_cell(dia, hora, Cell.normal(fake[dia][hora])); break;
                 case 4: ui_horario.display_cell(dia, hora, {fixed:false,text:turma.materia.codigo,bgcolor:"black",color:"red"}); break;
                 case 5: ui_horario.display_cell(dia, hora, Cell.red   (turma.materia.codigo)); break;
@@ -416,7 +419,6 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
                 overlay[dia][hora] = true;
             onover(dia, hora);
         };
-        ui_grayout.show();
         ui_horario.set_toggle(toggle, onover, onout);
         ui_turmas.edit_start(turma);
         self.editando = turma;
@@ -447,11 +449,9 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
     };
 
     ui_turmas.cb_ok = function() {
-        ui_grayout.hide();
         update_all();
     };
     ui_turmas.cb_cancel = function() {
-        ui_grayout.hide();
         clear_overlay();
         ui_horario.set_toggle(null);
         ui_turmas.edit_end();
@@ -474,11 +474,7 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             identifier = "matrufsc";
         }
         ui_saver.form.action = "ping.cgi?q=" + encodeURIComponent(identifier + ext);
-        if (ext == ".ics") {
-            ui_saver.form_input.value = state.ics();
-        } else {
-            ui_saver.form_input.value = state.to_json();
-        }
+        ui_saver.form_input.value = state.to_json();
         ui_saver.form.submit();
     };
     ui_saver.cb_upload = function() {
@@ -550,13 +546,7 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             return;
         }
 
-        let url = 'load/' + identifier;
-
-        const debug = false;
-        if (debug) {
-            url = 'http://localhost:5000/matrufsc' + url;
-        }
-
+        let url = `${DB_URL}/load/${identifier}`;
         let request = new Request(
             url,
             {
@@ -600,7 +590,6 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
                 });
             });
 
-        _gaq.push(['_trackEvent', 'state', 'load', identifier])
         ui_logger.waiting('carregando horário para "' + identifier + '"');
     }
     /* UI_horario */
@@ -666,13 +655,11 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             return;
         }
 
-        let url = 'store/' + identifier;
         let data = state.to_json();
         persistence.write_state(data);
 
-        const debug = false;
-        if (debug) {
-            url = 'http://localhost:5000/matrufsc' + url;
+        let url = `${DB_URL}/store/${identifier}`;
+        if (DEBUG) {
             data = {"versao":5,"campus":"FLO","semestre":"20191","planos":[{"combinacao":1,"materias":[{"codigo":"INE5429","nome":"Segurança em Computação *CIÊNCIAS DA COMPUTAÇÃO","cor":"lightcoral","campus":"FLO","semestre":"20191","turmas":[{"nome":"07208","horas_aula":72,"vagas_ofertadas":30,"vagas_ocupadas":0,"alunos_especiais":0,"saldo_vagas":30,"pedidos_sem_vaga":0,"professores":["Jean Everson Martina","Ricardo Felipe Custódio"],"horarios":["3.1620-1 / CTC-INE101","3.1710-1 / CTC-INE101","5.1620-1 / CTC-CTC101","5.1710-1 / CTC-CTC101"],"selected":1}],"agrupar":1,"selected":1},{"codigo":"INE5420","nome":"Computação Gráfica *CIÊNCIAS DA COMPUTAÇÃO","cor":"lightcyan","campus":"FLO","semestre":"20191","turmas":[{"nome":"05208","horas_aula":72,"vagas_ofertadas":33,"vagas_ocupadas":0,"alunos_especiais":0,"saldo_vagas":33,"pedidos_sem_vaga":0,"professores":["Aldo Von Wangenheim"],"horarios":["3.0820-1 / CTC-LABINF","3.0910-1 / CTC-LABINF","5.0820-1 / CTC-LABINF","5.0910-1 / CTC-LABINF"],"selected":1}],"agrupar":1,"selected":1},{"codigo":"INE5433","nome":"Trabalho de Conclusão de Curso I (TCC) *CIÊNCIAS DA COMPUTAÇÃO","cor":"lightgoldenrodyellow","campus":"FLO","semestre":"20191","turmas":[{"nome":"07208","horas_aula":108,"vagas_ofertadas":40,"vagas_ocupadas":0,"alunos_especiais":0,"saldo_vagas":40,"pedidos_sem_vaga":0,"professores":["Renato Cislaghi"],"horarios":[],"selected":1}],"agrupar":1,"selected":1},{"codigo":"INE5431","nome":"Sistemas Multimídia *CIÊNCIAS DA COMPUTAÇÃO","cor":"lightblue","campus":"FLO","semestre":"20191","turmas":[{"nome":"07208","horas_aula":72,"vagas_ofertadas":35,"vagas_ocupadas":0,"alunos_especiais":0,"saldo_vagas":35,"pedidos_sem_vaga":0,"professores":["Roberto Willrich"],"horarios":["3.1330-1 / CTC-CTC303","3.1420-1 / CTC-CTC303","5.1330-1 / CTC-CTC107","5.1420-1 / CTC-CTC107"],"selected":1}],"agrupar":1,"selected":1}],"materia":"INE5431"},{"combinacao":0,"materias":[],"materia":""},{"combinacao":0,"materias":[],"materia":""},{"combinacao":0,"materias":[],"materia":""}],"plano":0};
         }
 
@@ -703,7 +690,6 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
                 mudancas = false;
             });
 
-        _gaq.push(['_trackEvent', 'state', 'save', identifier])
         ui_logger.waiting("salvando horário para '" + identifier + "'");
     };
 
@@ -827,8 +813,6 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
         req.open("GET", src, true);
         req.send(null);
 
-        _gaq.push(['_trackEvent', 'db', 'load', semestre])
-
         var f_pontos = 0;
         loading = function() {
             var innerHTML = "carregando ";
@@ -860,10 +844,8 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
         if (semestre == current) {
             ui_avisos.reset();
         } else {
-            let str = semestre.substr(0,4) + "-" + semestre.substr(4,1);
             ui_avisos.set_text(
-                "Você escolheu os horários de " + str + "! " +
-                "Nós já estamos em " + year + '-' + semester + "!"
+                "Há semestres novos disponíveis"
             );
         }
         semestre = DB_BASE_PATH + '/' + semestre;
@@ -923,40 +905,13 @@ window.onload = function() {
     var ui_updates     = new UI_updates("updates_list");
     var ui_avisos      = new UI_avisos("avisos");
 
-    var ui_grayout     = new UI_grayout("grayout");
-    ui_grayout.cb_onclick = function() {
-        if (sobre_shown) {
-            ui_sobre_popup.cb_fechar();
-        } else if (main.editando) {
-            ui_turmas.cb_cancel();
-        }
-    };
-    var ui_sobre_popup = new UI_sobre_popup("sobre_popup");
-    ui_sobre_popup.link = document.getElementById("sobre");
-    var a = document.createElement("a");
-    a.href = "#";
-    a.innerHTML = "Sobre";
-    a.onclick = function() {
-        _gaq.push(['_trackEvent', 'sobre', 'show', identifier]);
-        ui_sobre_popup.show();
-        ui_grayout.show();
-        sobre_shown = true;
-    };
-    ui_sobre_popup.link.appendChild(a);
-    ui_sobre_popup.cb_fechar = function() {
-        _gaq.push(['_trackEvent', 'sobre', 'hide', identifier]);
-        ui_grayout.hide();
-        ui_sobre_popup.hide();
-        sobre_shown = false;
-    }
-
     var state = new State();
     var display = new Display(ui_logger, ui_horario);
 
     dconsole2 = new Dconsole("dconsole");
     var combo   = new Combobox("materias_input", "materias_suggestions", ui_logger, database);
     var main   = new Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes,
-                          ui_horario, ui_saver, ui_campus, ui_planos, ui_grayout,
+                          ui_horario, ui_saver, ui_campus, ui_planos,
                           ui_updates, ui_avisos, combo,
                           state, display, persistence, database);
 
@@ -972,7 +927,6 @@ window.onload = function() {
         if (elm.nodeType == 3) // defeat Safari bug
             elm = elm.parentNode;
         if (sobre_shown && c == 27) {
-            ui_sobre_popup.cb_fechar();
             return;
         }
         if (main.editando) {
@@ -1059,7 +1013,6 @@ window.onload = function() {
 
     document.getElementById("versao").innerHTML = versao_capim;
     document.getElementById("ui_main").style.display = "block";
-    document.getElementById("ui_fb").style.display = "block";
     ui_turmas.set_height(ui_horario.height());
     ui_materias.fix_width();
 }
