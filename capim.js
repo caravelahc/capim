@@ -3441,7 +3441,7 @@ function UI_updates(id)
     self.hide();
 }
 const default_db = current_display_semester();
-const DEBUG = true;
+const DEBUG = false;
 const DB_URL = DEBUG ? "http://localhost:8001" : "https://db.matrufsc.caravela.club";
 
 /**
