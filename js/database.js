@@ -1,4 +1,4 @@
-DB_BASE_PATH = 'data/'
+DB_BASE_PATH = 'data'
 /**
  * @constructor
  */
