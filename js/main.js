@@ -667,7 +667,7 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
             url,
             {
                 method: 'PUT',
-                body: JSON.stringify(data),
+                body: data,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -681,13 +681,14 @@ function Main(ui_materias, ui_turmas, ui_logger, ui_combinacoes, ui_horario,
                         'erro ao salvar horário para "' + identifier + '"',
                         'lightcoral'
                     );
+                } else {
+                    ui_logger.set_text(
+                        'horário para "' + identifier + '" foi salvo',
+                        'lightgreen'
+                    );
+                    persistence.write_id(identifier);
+                    mudancas = false;
                 }
-                ui_logger.set_text(
-                    'horário para "' + identifier + '" foi salvo',
-                    'lightgreen'
-                );
-                persistence.write_id(identifier);
-                mudancas = false;
             });
 
         ui_logger.waiting("salvando horário para '" + identifier + "'");
